@@ -1,0 +1,8 @@
+#!/usr/bin/env python3
+
+UHD_DEFAULT_ARGS = "addr=192.168.10.2"
+UHD_DEFAULT_GAIN = 0.0
+UHD_DEFAULT_RATE = 1E6
+
+UHD_TX
+
