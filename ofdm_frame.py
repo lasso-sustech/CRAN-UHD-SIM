@@ -40,11 +40,11 @@ class ofdm_frame:
 
     def frame_to_buffer(self):
         padlen=16
-        padding=np.full(padlen,0.1+0.1j,dtype=np.complex64)
+        padding=np.full(padlen,0.1+0.1j,dtype=np.complex64) #NOTE: Inter-Frame Interval
         padzeros=np.zeros(120,dtype=np.complex64)
         ofdm_symbol=np.concatenate((self.train_seq,self.pilot_seq,self.payload))
         ofdm_symbol=ofdm_symbol/np.max(np.absolute(ofdm_symbol))
-        frame_symbol=np.concatenate((padding,self.barker_sq,ofdm_symbol,padding,padzeros))
+        frame_symbol=np.concatenate( [padding,self.barker_sq,ofdm_symbol,padding,padzeros] )
         buffer=pulse_shaping(frame_symbol,4,0.8,2)
         
         sym_energy=np.max(np.absolute(buffer))

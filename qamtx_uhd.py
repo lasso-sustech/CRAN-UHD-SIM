@@ -7,8 +7,8 @@ import ofdm_frame as fr
 import uhd_conf as ucf
 from params import *
 
-CLOCK_TIMEOUT = 1000  # 1000mS timeout for external clock locking
-INIT_DELAY    = 0.05  # 50mS initial delay before transmit
+CLOCK_TIMEOUT = 1000  # 1000ms timeout for external clock locking
+INIT_DELAY    = 0.05  # 50ms initial delay before transmit
 
 def parse_args():
     """Parse the command line arguments"""
@@ -79,15 +79,13 @@ def rx_host(usrp,rx_streamer,timer_elapsed_event):
 def main():
     """Run the benchmarking tool"""
     args = parse_args()
-    usrp,st_args=ucf.uhd_builder(args.args, args.gain, args.rate)
+    usrp, st_args = ucf.uhd_builder(args.args, args.gain, args.rate)
 
     print("..........build......\n")
     threads=[]
     tx_quit_event = threading.Event()
     rx_quit_event = threading.Event()
     if args.tx:
-
-        
         tx_streamer = usrp.get_tx_stream(st_args)
         tx_thread = threading.Thread(target=tx_host,
                                     args=(usrp, tx_streamer, tx_quit_event))
@@ -95,10 +93,9 @@ def main():
         tx_thread.start()
         tx_thread.setName("tx_stream")
     if args.rx:
-
-        
         rx_streamer = usrp.get_rx_stream(st_args)
-        rx_thread = threading.Thread(target=rx_host,args=(usrp, rx_streamer, rx_quit_event))
+        rx_thread = threading.Thread(target=rx_host,
+                                    args=(usrp, rx_streamer, rx_quit_event))
         threads.append(rx_thread)
         rx_thread.start()
         rx_thread.setName("rx_stream")
@@ -112,7 +109,7 @@ def main():
     for thr in threads:
         thr.join()
 
-    return True
+    pass
 
 if __name__ == "__main__":
     try:
